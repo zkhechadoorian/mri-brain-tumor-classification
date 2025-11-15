@@ -1,0 +1,9 @@
+data/
+__pycache__/
+models/
+*.h5
+*.pt
+*.ckpt
+*.pyc
+.ipynb_checkpoints/
+*.pkl
