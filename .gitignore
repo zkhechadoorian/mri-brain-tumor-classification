@@ -7,3 +7,5 @@ models/
 *.pyc
 .ipynb_checkpoints/
 *.pkl
+.venv/
+.DS_Store
