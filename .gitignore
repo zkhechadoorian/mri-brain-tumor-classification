@@ -9,3 +9,6 @@ models/
 *.pkl
 .venv/
 .DS_Store
+data/brain_tumor_dataset/     # Original raw data
+data/processed/               # Preprocessed data
+data/augmented/               # Augmented data
