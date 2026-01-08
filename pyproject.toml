@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mri_brain_tumor"
+version = "0.1.0"
+description = "MRI brain tumor project"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [{name = "You"}]
+dependencies = [
+  "numpy",
+  "torch",
+  "torchvision",
+  "opencv-python",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
