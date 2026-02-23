@@ -7,8 +7,10 @@ models/
 *.pyc
 .ipynb_checkpoints/
 *.pkl
+*.log
 .venv/
 .DS_Store
-data/brain_tumor_dataset/     # Original raw data
-data/processed/               # Preprocessed data
-data/augmented/               # Augmented data
+data/**/*.jpg
+data/**/*.png
+data/**/*.jpeg
+!data/processed/preprocessing_metadata.json
