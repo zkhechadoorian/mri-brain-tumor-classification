@@ -13,4 +13,6 @@ models/
 data/**/*.jpg
 data/**/*.png
 data/**/*.jpeg
+notebooks/*.npy
+*/
 !data/processed/preprocessing_metadata.json
