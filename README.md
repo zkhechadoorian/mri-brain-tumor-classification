@@ -22,7 +22,8 @@ mri-brain-tumor-classification/
 ├── requirements.txt
 │
 ├── data/
-│   └── (add your MRI dataset here — not tracked by Git)
+│   ├── Training/
+│   ├── Testing/
 │
 ├── notebooks/
 │   ├── 01_explore_data.ipynb
@@ -45,7 +46,8 @@ mri-brain-tumor-classification/
 ```
 
 ## 🩺 Dataset
-**Source:** [Kaggle Brain Tumor MRI Dataset](https://www.kaggle.com/datasets/sartajbhuvaji/brain-tumor-classification-mri)  
+**Source:** [Kaggle Brain Tumor MRI Dataset](https://www.kaggle.com/datasets/sartajbhuvaji/brain-tumor-classification-mri) 
+
 **Description:**  
 Contains MRI images classified into four groups:
 - Glioma Tumor  
@@ -53,7 +55,11 @@ Contains MRI images classified into four groups:
 - Pituitary Tumor  
 - No Tumor  
 
-All data is anonymized and used for educational purposes only.
+All data is anonymized and used for educational purposes only. An image of the class distribution is shown below after the data is cleaned. Most notably, the 'no_tumor' class contains fewer images than any of the tumor-containing classes. As a result, class weights are implemented into the loss calculation to penalize misclassifications of 'no_tumor' images more heavily during training. 
+
+![class distribution](/assets/class_distribution.png)
+
+
 
 ---
 
