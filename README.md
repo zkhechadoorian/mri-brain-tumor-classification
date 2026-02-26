@@ -91,6 +91,11 @@ All data is anonymized and used for educational purposes only. An image of the c
 ---
 
 ## 🧪 Results (example placeholder)
+
+![Learning Curves](assets/training_curves.png)
+
+![Confusion Matrix](assets/confusion_matrix.png)
+
 | Metric | Value |
 |--------|--------|
 | Accuracy | 94.2% |
