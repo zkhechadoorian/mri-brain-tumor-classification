@@ -30,32 +30,39 @@ Class imbalance occurs when some classes (e.g., 'no_tumor') are underrepresented
 ## Project Structure
 ```
 mri-brain-tumor-classification/
-│
-├── README.md
-├── requirements.txt
-│
-├── data/
-│   ├── Training/
-│   ├── Testing/
-│
-├── notebooks/
+├── assets
+│   ├── class_distribution.png
+│   ├── confusion_matrix.png
+│   └── training_curves.png
+├── data
+│   ├── brain_tumor_dataset
+│   ├── eda_findings.json
+│   └── processed
+├── deploy
+│   ├── app.py
+│   ├── README.md
+│   ├── requirements.txt
+│   ├── static
+│   └── templates
+├── models
+│   └── resnet18_brain_tumor_weights.pth
+├── notebooks
 │   ├── 01_explore_data.ipynb
 │   ├── 02_preprocessing.ipynb
 │   ├── 03_train_model.ipynb
-│   ├── 04_evaluate_model.ipynb
-│   └── 05_explainability.ipynb
-│
-├── models/
-│   └── (saved trained models go here)
-│
-├── utils/
-│   ├── dataloader.py
-│   └── preprocessing.py
-│
-└── results/
-    ├── confusion_matrix.png
-    ├── roc_curve.png
-    └── gradcam_example.png
+│   ├── 04_explainability.ipynb
+│   ├── duplicates.log
+│   ├── train_accs.npy
+│   ├── train_losses.npy
+│   ├── val_accs.npy
+│   └── val_losses.npy
+├── pyproject.toml
+├── README.md
+├── requirements.txt
+└── src
+    ├── __init__.py
+    ├── mri_brain_tumor
+    └── mri_brain_tumor.egg-info
 ```
 
 ## 🩺 Dataset
@@ -84,9 +91,16 @@ All data is anonymized and used for educational purposes only. An image of the c
 3. **Model Training and Evaluation**
     - [03_train_model.ipynb](notebooks/03_train_model.ipynb): Implements and trains ResNet18 with class weights, tracks training/validation curves, and saves model weights. It also computes precision, recall, F1, ROC, confusion matrix, and analyzes false positives/negatives.
 4. **Explainability**
-    - [05_explainability.ipynb](notebooks/05_explainability.ipynb): Applies Grad-CAM to visualize model attention and interpret predictions.
+    - [04_explainability.ipynb](notebooks/05_explainability.ipynb): Applies Grad-CAM to visualize model attention and interpret predictions.
 5. **Ethics & Limitations discussion**
     - Discusses dataset bias, clinical limitations, and ethical considerations for AI in medicine.
+
+---
+
+## 🧮 Loss Function
+
+The model uses **CrossEntropyLoss** for multi-class classification.  
+To address class imbalance (especially the underrepresented 'no_tumor' class), class weights are computed from the training set and passed to the loss function. This ensures that errors on minority classes are penalized more heavily, improving diagnostic reliability.
 
 ---
 
@@ -103,7 +117,7 @@ All data is anonymized and used for educational purposes only. An image of the c
 | Specificity | 95.5% |
 
 Example Grad-CAM heatmap:  
-![Grad-CAM Example](results/gradcam_example.png)
+![Grad-CAM Example](assets/sample_gradcam.png)
 
 ---
 
@@ -113,6 +127,24 @@ It is **not** a diagnostic or clinical decision tool.
 All data used is publicly available and de-identified.
 
 ---
+
+## 🔭 Future Improvements
+
+- **Explore Alternative Loss Functions:**  
+  Investigate how the model performs with different loss functions (e.g., focal loss, label smoothing, or Dice loss) to further address class imbalance and improve robustness.
+
+- **Advanced Explainability Techniques:**  
+  Extend model interpretability beyond Grad-CAM by experimenting with other methods such as Integrated Gradients, LIME, or SHAP to gain deeper insights into model decision-making.
+
+- **Web Application Deployment:**  
+  Develop and deploy a user-friendly web application that allows clinicians or researchers to upload MRI images and receive real-time predictions, making the model accessible for practical use and demonstration.
+
+- **Additional Ideas:**  
+  - Hyperparameter optimization (e.g., using Optuna or Ray Tune)
+  - Ensemble modeling for improved accuracy
+  - Data augmentation strategies tailored for medical imaging
+  - External validation on independent datasets
+
 
 ## 📚 References
 - Bhuvaji et al., *Brain Tumor Classification (Kaggle)*  
