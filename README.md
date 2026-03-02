@@ -101,7 +101,7 @@ An image of the class distribution is shown below after the data is cleaned. Mos
 3. **Model Training and Evaluation**
     - [03_train_model.ipynb](notebooks/03_train_model.ipynb): Implements and trains ResNet18 with class weights, tracks training/validation curves, and saves model weights. It also computes precision, recall, F1, ROC, confusion matrix, and analyzes false positives/negatives.
 4. **Explainability**
-    - [04_explainability.ipynb](notebooks/05_explainability.ipynb): Applies Grad-CAM to visualize model attention and interpret predictions.
+    - [04_explainability.ipynb](notebooks/04_explainability.ipynb): Applies Grad-CAM to visualize model attention and interpret predictions.
 5. **Ethics & Limitations discussion**
     - Discusses dataset bias, clinical limitations, and ethical considerations for AI in medicine.
 
@@ -147,24 +147,34 @@ If running on a cloud platform (e.g., Colab or Kaggle), upload the dataset and a
 
 ---
 
-## 🧪 Results (example placeholder)
+## 🧪 Model Evaluation Results
 
 The learning curves below show training and validation loss and accuracies through each epoch. Early stopping was implemented such that the model would automatically stop training if no improvements were seen in validation loss after 5 epochs. 
 
 ![Learning Curves](assets/training_curves.png)
 
-The best model, as determined from the lowest validation accuracy, was used to create the evaluation metrics shown below. The 
+The best model, as determined by the lowest validation loss, was used to generate the evaluation metrics below.
 
 ![Confusion Matrix](assets/confusion_matrix.png)
 
-| Class | Precision | Recall | F1-Score | Support |
-|---|---|---|---|---|
-| Glioma | 0.92 | 0.73 | 0.82 | 187 |
-| Meningioma | 0.73 | 0.91 | 0.81 | 143 |
-| No Tumor | 0.92 | 0.90 | 0.91 | 108 |
-| Pituitary | 0.94 | 0.97 | 0.95 | 149 |
+The confusion matrix highlights that the model struggles most with identifying **glioma tumors**. These are frequently misclassified as meningioma tumors or as healthy, tumor-free MRIs. The latter case is especially concerning in a clinical context, where missing a cancer diagnosis is a critical error.
 
-Example Grad-CAM heatmap:  
+| Class      | Precision | Recall | F1-Score | Support |
+|------------|-----------|--------|----------|---------|
+| Glioma     | 0.92      | 0.73   | 0.82     | 187     |
+| Meningioma | 0.73      | 0.91   | 0.81     | 143     |
+| No Tumor   | 0.92      | 0.90   | 0.91     | 108     |
+| Pituitary  | 0.94      | 0.97   | 0.95     | 149     |
+
+The table above shows per-class performance metrics. **Recall** is the most important metric for this project, as a higher recall means fewer false negatives (i.e., fewer cases of cancer being labeled as tumor-free). The model achieves high recall for most classes, but only 73% for glioma tumors, indicating that nearly 1 in 4 glioma cases are missed.
+
+**Why is glioma harder to classify?**  
+Gliomas can develop in many different regions of the brain, leading to greater variability in their appearance on MRI scans. In contrast, meningioma and pituitary tumors typically arise in more specific, consistent anatomical locations, making them easier for the model to recognize.
+
+**Example Grad-CAM heatmap:**  
+Grad-CAM visualizations help interpret which regions of the image the model focuses on when making predictions.  
+Further analysis is needed to determine whether the model is attending to clinically relevant features, especially for glioma cases.
+
 ![Grad-CAM Example](assets/sample_gradcam.png)
 
 ---
