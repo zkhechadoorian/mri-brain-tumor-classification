@@ -1,4 +1,9 @@
+![glioma misclassifications](/assets/misclassified_gliomas.png)
+
+<p align="center"><em>Examples of glioma tumor misclassifications by the model which can point to further improvements.</em></p>
+
 # 🧠 MRI Brain Tumor Classification
+A deep learning pipeline for classifying brain MRI scans into four tumor categories, with a focus on minimizing missed diagnoses through class-weighted training and threshold-optimized inference.
 
 This project demonstrates a complete deep learning pipeline for classifying brain MRI scans into different tumor categories (glioma, meningioma, pituitary, or no tumor). The project emphasizes **medical data understanding**, **model interpretability**, and **ethical AI use**.
 
@@ -172,10 +177,21 @@ The table above shows per-class performance metrics. **Recall** is the most impo
 Gliomas can develop in many different regions of the brain, leading to greater variability in their appearance on MRI scans. In contrast, meningioma and pituitary tumors typically arise in more specific, consistent anatomical locations, making them easier for the model to recognize.
 
 **Example Grad-CAM heatmap:**  
-Grad-CAM visualizations help interpret which regions of the image the model focuses on when making predictions.  
-Further analysis is needed to determine whether the model is attending to clinically relevant features, especially for glioma cases.
+Grad-CAM visualizations help interpret which regions of the image the model focuses on when making predictions. By overlaying heatmaps on the original MRI scans, we can see whether the model is attending to relevant anatomical features.
+
+Preliminary analysis suggests that some misclassifications occur because the model focuses on the wrong part of the MRI—potentially missing the tumor entirely or attending to non-tumor regions. In other cases, the model does attend to the correct region containing the tumor, but still struggles to distinguish gliomas from other tumor types or healthy tissue. This is likely due to the inherent variability of gliomas, which can develop in many different parts of the brain and present with diverse appearances, unlike meningioma and pituitary tumors that tend to arise in more consistent locations.
+
+Further analysis is needed to determine whether the model's attention aligns with clinical expectations and to identify specific patterns in misclassification.
 
 ![Grad-CAM Example](assets/sample_gradcam.png)
+
+![glioma misclassifications](/assets/misclassified_gliomas.png)
+
+<p align="center"><em>Figure 1: Examples of glioma tumor misclassifications by the model. In some cases, the model's attention is misplaced, while in others, it attends to the tumor but fails to classify it correctly.</em></p>
+
+![glioma classifications](/assets/classified_gliomas.png)
+
+<p align="center"><em>Figure 2: Examples of gliomas correctly classified by the model, with attention focused on the tumor region.</em></p>
 
 ---
 
