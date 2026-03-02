@@ -1,11 +1,15 @@
 # 🧠 MRI Brain Tumor Classification
 
-This project demonstrates a complete deep learning pipeline for classifying brain MRI scans into different tumor categories (glioma, meningioma, pituitary, or no tumor).  
-The project emphasizes **medical data understanding**, **model interpretability**, and **ethical AI use**.
+This project demonstrates a complete deep learning pipeline for classifying brain MRI scans into different tumor categories (glioma, meningioma, pituitary, or no tumor). The project emphasizes **medical data understanding**, **model interpretability**, and **ethical AI use**.
 
 
 ## 🏗️ Model Architecture
-This project uses the ResNet18 convolutional neural network architecture. ResNet18 consists of:
+This project uses the ResNet18 convolutional neural network architecture, which is a pretrained architecture suitable for imaging tasks due to its balance of depth and computational efficiency.
+
+<details>
+  <summary>Model Architecture Details</summary>
+
+ResNet18 consists of:
 - An initial convolutional layer 
 - Four sequential blocks, each containing two "BasicBlocks" (each block has two convolutional layers and a shortcut connection) (16 layers)
 - A global average pooling layer
@@ -14,8 +18,7 @@ This project uses the ResNet18 convolutional neural network architecture. ResNet
 There are a total of 18 layers. 
 The shortcut (residual) connections help prevent vanishing gradients, enabling deeper networks to learn effectively. The model is adapted for grayscale MRI images and trained with class weights to address imbalance.
 
-## ⚖️ Why Class Imbalance Matters
-Class imbalance occurs when some classes (e.g., 'no_tumor') are underrepresented compared to others. In medical imaging, this can cause the model to be biased toward predicting the majority classes, potentially missing critical cases. To mitigate this, class weights are used in the loss function, penalizing errors on minority classes more heavily and improving diagnostic reliability.
+</details>
 
 
 ## 🚀 Objectives
@@ -24,10 +27,14 @@ Class imbalance occurs when some classes (e.g., 'no_tumor') are underrepresented
 - Evaluate performance with medical metrics (sensitivity, specificity, ROC-AUC).
 - Apply explainability techniques (Grad-CAM) to interpret model predictions.
 - Discuss limitations, bias, and ethical considerations.
+- Reproducible pipeline.
 
 ---
 
 ## Project Structure
+
+The file tree below shows the entire project structure. Se notebooks for step-by-step workflow.
+
 ```
 mri-brain-tumor-classification/
 ├── assets
@@ -75,11 +82,14 @@ Contains MRI images classified into four groups:
 - Pituitary Tumor  
 - No Tumor  
 
-All data is anonymized and used for educational purposes only. An image of the class distribution is shown below after the data is cleaned. Most notably, the 'no_tumor' class contains fewer images than any of the tumor-containing classes. As a result, class weights are implemented into the loss calculation to penalize misclassifications of 'no_tumor' images more heavily during training. 
+All data is anonymized and used for educational purposes only. 
+
+## ⚖️ Why Class Imbalance Matters
+Class imbalance occurs when some classes (e.g., 'no_tumor') are underrepresented compared to others. In medical imaging, this can cause the model to be biased toward predicting the majority classes, potentially missing critical cases. In a clinical setting, this could lead to missed diagnoses of rare tumor types. To mitigate the effect of class imbalance, weights are used in the loss function, penalizing errors on minority classes more heavily and improving diagnostic reliability.
+
+An image of the class distribution is shown below after the data is cleaned. Most notably, the 'no_tumor' class contains fewer images than any of the tumor-containing classes. As a result, class weights are implemented into the loss calculation to penalize misclassifications of 'no_tumor' images more heavily during training. 
 
 ![class distribution](/assets/class_distribution.png)
-
-
 
 ---
 
@@ -104,17 +114,55 @@ To address class imbalance (especially the underrepresented 'no_tumor' class), c
 
 ---
 
+## How to Run This Project
+
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/zkhechadoorian/mri-brain-tumor-classification.git
+   cd mri-brain-tumor-classification
+   ```
+
+2. **Create a Python virtual environment (recommended):**
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
+
+3. **Install required packages:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Download and place the dataset:**
+   - Download the [Kaggle Brain Tumor MRI Dataset](https://www.kaggle.com/datasets/sartajbhuvaji/brain-tumor-classification-mri).
+   - Place the extracted data in the `data/brain_tumor_dataset` directory.
+
+5. **Run the notebooks:**
+   - Open the `notebooks` folder in VS Code or Jupyter.
+   - Follow the workflow from `01_explore_data.ipynb` through `04_explainability.ipynb`.
+
+**Tip:**  
+If running on a cloud platform (e.g., Colab or Kaggle), upload the dataset and adjust paths as needed.
+
+---
+
 ## 🧪 Results (example placeholder)
+
+The learning curves below show training and validation loss and accuracies through each epoch. Early stopping was implemented such that the model would automatically stop training if no improvements were seen in validation loss after 5 epochs. 
 
 ![Learning Curves](assets/training_curves.png)
 
+The best model, as determined from the lowest validation accuracy, was used to create the evaluation metrics shown below. The 
+
 ![Confusion Matrix](assets/confusion_matrix.png)
 
-| Metric | Value |
-|--------|--------|
-| Accuracy | 94.2% |
-| Sensitivity | 91.8% |
-| Specificity | 95.5% |
+| Class | Precision | Recall | F1-Score | Support |
+|---|---|---|---|---|
+| Glioma | 0.92 | 0.73 | 0.82 | 187 |
+| Meningioma | 0.73 | 0.91 | 0.81 | 143 |
+| No Tumor | 0.92 | 0.90 | 0.91 | 108 |
+| Pituitary | 0.94 | 0.97 | 0.95 | 149 |
 
 Example Grad-CAM heatmap:  
 ![Grad-CAM Example](assets/sample_gradcam.png)
@@ -123,7 +171,7 @@ Example Grad-CAM heatmap:
 
 ## ⚖️ Ethical Statement
 This model is **for research and educational purposes only**.  
-It is **not** a diagnostic or clinical decision tool.  
+It is **not a diagnostic or clinical decision tool**.  
 All data used is publicly available and de-identified.
 
 ---
